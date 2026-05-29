@@ -14,7 +14,7 @@ scene = bpy.context.scene
 view_layer = bpy.context.view_layer
 
 bpy.ops.object.select_all(action='SELECT')
-bpy.ops.object.delete(confirm_confirm=False)
+bpy.ops.object.delete(confirm=False)
 
 bpy.ops.import_scene.gltf(filepath=input_path)
 
