@@ -36,6 +36,7 @@
               exit 1
             fi
             START="$(${pkgs.coreutils}/bin/date +%s)"
+            export PATH="${pkgs.ffmpeg}/bin:$PATH"
             ${pkgs.blender}/bin/blender --background --python "${./render.py}" -- "$INPUT" "$OUTPUT"
             EXIT=$?
             ELAPSED="$(($(${pkgs.coreutils}/bin/date +%s) - START))"
