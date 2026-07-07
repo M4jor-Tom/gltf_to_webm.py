@@ -3,9 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    gltf_to_png_py.url = "github:M4jor-Tom/gltf_to_png.py";
   };
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, gltf_to_png_py }:
     let
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
@@ -24,7 +25,7 @@
             OUTPUT=""
             REPORT=""
             START_ANGLE="0"
-            ELEVATION=""
+            ELEVATION="15"
             NUM_FRAMES="72"
             DURATION="3.0"
             while [ $# -gt 0 ]; do
@@ -51,6 +52,7 @@
             fi
             START="$(${pkgs.coreutils}/bin/date +%s)"
             export PATH="${pkgs.ffmpeg}/bin:$PATH"
+            export GLTF_TO_PNG_RENDER="${gltf_to_png_py}/render.py"
             ${pkgs.blender}/bin/blender --background --python "${./render.py}" -- "$INPUT" "$OUTPUT" "$START_ANGLE" "$ELEVATION" "$NUM_FRAMES" "$DURATION"
             EXIT=$?
             ELAPSED="$(($(${pkgs.coreutils}/bin/date +%s) - START))"
